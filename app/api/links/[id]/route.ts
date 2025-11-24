@@ -1,3 +1,4 @@
+// app/api/links/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 
@@ -10,9 +11,20 @@ export async function DELETE(
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
   }
 
-  // Soft delete: sirf is_active ko FALSE karo
   try {
-    await query("UPDATE links SET is_active = FALSE WHERE id = $1", [id]);
+    // SOFT DELETE → is_active = FALSE
+    const result = await query(
+      "UPDATE links SET is_active = FALSE WHERE id = $1",
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return NextResponse.json(
+        { error: "Link not found" },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error soft deleting link:", error);

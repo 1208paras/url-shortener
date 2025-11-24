@@ -61,9 +61,16 @@ export default function HomePage() {
   }
 
   async function handleDelete(id: number) {
-    await fetch(`/api/links/${id}`, { method: "DELETE" });
-    setLinks((prev) => prev.filter((l) => l.id !== id));
+  const res = await fetch(`/api/links/${id}`, { method: "DELETE" });
+
+  if (!res.ok) {
+    console.error("Failed to delete link");
+    return;
   }
+
+  setLinks((prev) => prev.filter((l) => l.id !== id));
+}
+
 
   function formatDate(dateStr: string | null) {
     if (!dateStr) return "—";
