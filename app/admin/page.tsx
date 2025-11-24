@@ -27,7 +27,9 @@ export default function AdminPage() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/links");
+      const res = await fetch("/api/admin/links", {
+        cache: "no-store",
+      });
       const data = await res.json();
       if (!res.ok) {
         setError(data.error || "Failed to load links");
