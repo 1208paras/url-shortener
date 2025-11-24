@@ -3,53 +3,104 @@ import { FaLinkedinIn, FaGithub, FaEnvelope } from "react-icons/fa";
 
 export default function ContactSection() {
   return (
-    <section className="w-full bg-slate-950 text-slate-50 mt-24 py-20">
-      <div className="flex flex-col items-center gap-12">
-
-        {/* ✨ BEAUTIFUL BIG HEADING */}
-        <h2 className="text-4xl md:text-5xl font-bold tracking-wide text-slate-200">
+    <section className="w-full bg-slate-950 text-slate-50" style={{ marginTop: "6rem", padding: "4rem 0" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "28px",
+        }}
+      >
+        {/* BIG, NICE HEADING */}
+        <h2
+          style={{
+            fontSize: "3.2rem",
+            fontWeight: 700,
+            letterSpacing: "0.04em",
+          }}
+        >
           Connect with Paras
         </h2>
 
-        {/* ✨ ICON ROW WITH REAL BIG GAP */}
-        <div className="flex items-center justify-center gap-20">
-
+        {/* ICON ROW – BIG + REAL GAP */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "56px", // yahi se icons ke beech ka gap control hoga
+          }}
+        >
           {/* Email */}
           <Link
             href="mailto:jindalparas961@gmail.com"
-            className="w-24 h-24 rounded-full bg-white flex items-center justify-center 
-                       hover:scale-125 transition-all duration-200 shadow-xl"
+            style={{
+              width: "80px",
+              height: "80px",
+              borderRadius: "50%",
+              backgroundColor: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 12px 25px rgba(0,0,0,0.35)",
+              transform: "translateY(0)",
+              transition: "transform 0.15s ease-out",
+            }}
           >
-            <FaEnvelope className="text-5xl text-slate-700" />
+            <FaEnvelope style={{ fontSize: "40px", color: "#0f172a" }} />
           </Link>
 
           {/* LinkedIn */}
           <Link
             href="https://www.linkedin.com/in/paras-jindal-397561202/"
             target="_blank"
-            className="w-24 h-24 rounded-full bg-[#0A66C2] flex items-center justify-center 
-                       hover:scale-125 transition-all duration-200 shadow-xl"
+            style={{
+              width: "80px",
+              height: "80px",
+              borderRadius: "50%",
+              backgroundColor: "#0A66C2",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 12px 25px rgba(15,118,210,0.55)",
+              transition: "transform 0.15s ease-out",
+            }}
           >
-            <FaLinkedinIn className="text-5xl text-white" />
+            <FaLinkedinIn style={{ fontSize: "40px", color: "#ffffff" }} />
           </Link>
 
           {/* GitHub */}
           <Link
             href="https://github.com/1208paras"
             target="_blank"
-            className="w-24 h-24 rounded-full bg-black flex items-center justify-center 
-                       hover:scale-125 transition-all duration-200 shadow-xl"
+            style={{
+              width: "80px",
+              height: "80px",
+              borderRadius: "50%",
+              backgroundColor: "#000000",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 12px 25px rgba(0,0,0,0.7)",
+              transition: "transform 0.15s ease-out",
+            }}
           >
-            <FaGithub className="text-5xl text-white" />
+            <FaGithub style={{ fontSize: "40px", color: "#ffffff" }} />
           </Link>
-
         </div>
 
-        {/* ✨ MORE LINE SPACING FOR CLEANER LOOK */}
-        <p className="text-sm text-slate-500 tracking-wide mt-4">
+        {/* FOOTER WITH EXTRA LINE GAP */}
+        <p
+          style={{
+            marginTop: "18px",
+            fontSize: "0.9rem",
+            color: "#94a3b8",
+            letterSpacing: "0.05em",
+          }}
+        >
           Built with ❤️ by Paras Jindal — Paras.ly
         </p>
-
       </div>
     </section>
   );
