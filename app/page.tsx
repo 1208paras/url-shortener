@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ContactSection from "@/components/ContactSection";
 
 type Link = {
   id: number;
@@ -61,16 +62,15 @@ export default function HomePage() {
   }
 
   async function handleDelete(id: number) {
-  const res = await fetch(`/api/links/${id}`, { method: "DELETE" });
+    const res = await fetch(`/api/links/${id}`, { method: "DELETE" });
 
-  if (!res.ok) {
-    console.error("Failed to delete link");
-    return;
+    if (!res.ok) {
+      console.error("Failed to delete link");
+      return;
+    }
+
+    setLinks((prev) => prev.filter((l) => l.id !== id));
   }
-
-  setLinks((prev) => prev.filter((l) => l.id !== id));
-}
-
 
   function formatDate(dateStr: string | null) {
     if (!dateStr) return "—";
@@ -78,9 +78,8 @@ export default function HomePage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 py-10 bg-slate-950 text-slate-100">
-      <div className="w-full max-w-4xl">
-
+    <main className="min-h-screen bg-slate-950 text-slate-100 px-4 py-10">
+      <div className="w-full max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-8 text-center">
           <h1 className="bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-400 bg-clip-text text-4xl font-extrabold text-transparent">
@@ -93,7 +92,6 @@ export default function HomePage() {
 
         {/* Card */}
         <div className="rounded-3xl border border-slate-800 bg-slate-900/60 p-6 shadow-xl space-y-6">
-
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-3">
             <input
@@ -145,7 +143,10 @@ export default function HomePage() {
                   </a>
 
                   <p className="text-xs text-slate-400">
-                    Clicks: <span className="text-emerald-300">{link.click_count}</span>
+                    Clicks:{" "}
+                    <span className="text-emerald-300">
+                      {link.click_count}
+                    </span>
                   </p>
 
                   <button
@@ -160,6 +161,9 @@ export default function HomePage() {
           )}
         </div>
       </div>
+
+      {/* Contact Section */}
+      <ContactSection />
     </main>
   );
 }
