@@ -10,8 +10,15 @@ export async function DELETE(
     return NextResponse.json({ error: "Invalid id" }, { status: 400 });
   }
 
-  // Soft delete: sirf is_active ko false karo
-  await query("UPDATE links SET is_active = FALSE WHERE id = $1", [id]);
-
-  return NextResponse.json({ success: true });
+  // Soft delete: sirf is_active ko FALSE karo
+  try {
+    await query("UPDATE links SET is_active = FALSE WHERE id = $1", [id]);
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error soft deleting link:", error);
+    return NextResponse.json(
+      { error: "Failed to delete link" },
+      { status: 500 }
+    );
+  }
 }

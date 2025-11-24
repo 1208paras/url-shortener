@@ -1,39 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
-import crypto from "crypto";
 
-function generateCode(length = 6) {
-  const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let out = "";
-  const bytes = crypto.randomBytes(length);
-  for (let i = 0; i < length; i++) out += chars[bytes[i] % chars.length];
-  return out;
+// GET → sirf active links laao (is_active = TRUE)
+export async function GET(req: NextRequest) {
+  try {
+    const result = await query(
+      "SELECT * FROM links WHERE is_active = TRUE ORDER BY created_at DESC"
+    );
+    return NextResponse.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching links:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch links" },
+      { status: 500 }
+    );
+  }
 }
 
+// POST → naya short URL banao
 export async function POST(req: NextRequest) {
-  const { url } = await req.json();
-  try { new URL(url); } catch { 
-    return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
+  try {
+    const body = await req.json();
+    const { url } = body; // frontend se 'url' aa raha hai
+
+    if (!url) {
+      return NextResponse.json(
+        { error: "URL is required" },
+        { status: 400 }
+      );
+    }
+
+    // random short code
+    const short_code = Math.random().toString(36).substring(2, 8);
+
+    const result = await query(
+      "INSERT INTO links (short_code, original_url) VALUES ($1, $2) RETURNING *",
+      [short_code, url]
+    );
+
+    return NextResponse.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error creating link:", error);
+    return NextResponse.json(
+      { error: "Failed to create link" },
+      { status: 500 }
+    );
   }
-
-  let code = generateCode();
-  let exists = await query("SELECT 1 FROM links WHERE short_code=$1",[code]);
-  while (exists.rows.length) {
-    code = generateCode();
-    exists = await query("SELECT 1 FROM links WHERE short_code=$1",[code]);
-  }
-
-  const result = await query(
-    "INSERT INTO links (short_code, original_url) VALUES ($1,$2) RETURNING *",
-    [code, url]
-  );
-  return NextResponse.json(result.rows[0]);
-}
-
-export async function GET() {
-  const result = await query(
-  "SELECT * FROM links WHERE is_active = TRUE ORDER BY created_at DESC"
-);
-
-  return NextResponse.json(result.rows);
 }
