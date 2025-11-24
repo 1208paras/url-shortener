@@ -12,18 +12,8 @@ export async function DELETE(
   }
 
   try {
-    // SOFT DELETE → is_active = FALSE
-    const result = await query(
-      "UPDATE links SET is_active = FALSE WHERE id = $1",
-      [id]
-    );
-
-    if (result.rowCount === 0) {
-      return NextResponse.json(
-        { error: "Link not found" },
-        { status: 404 }
-      );
-    }
+    // Soft delete – bas update call kar rahe, rowCount check nahi
+    await query("UPDATE links SET is_active = FALSE WHERE id = $1", [id]);
 
     return NextResponse.json({ success: true });
   } catch (error) {

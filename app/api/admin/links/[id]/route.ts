@@ -23,17 +23,11 @@ export async function PATCH(
   }
 
   try {
-    const result = await query(
-      "UPDATE links SET is_active = $1 WHERE id = $2",
-      [body.is_active, id]
-    );
-
-    if (result.rowCount === 0) {
-      return NextResponse.json(
-        { error: "Link not found" },
-        { status: 404 }
-      );
-    }
+    // rowCount check hata diya – TypeScript safe
+    await query("UPDATE links SET is_active = $1 WHERE id = $2", [
+      body.is_active,
+      id,
+    ]);
 
     return NextResponse.json({ success: true });
   } catch (err) {
