@@ -1,4 +1,3 @@
-// Improved ContactSection with centered icons at bottom
 import Link from "next/link";
 import { FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
@@ -12,11 +11,11 @@ export default function ContactSection() {
         </h2>
 
         {/* Icons Row */}
-        <div className="flex items-center justify-center space-x-10 text-3xl">
+        <div className="flex items-center justify-center gap-12 md:gap-16 text-4xl">
           {/* Email */}
           <Link
             href="mailto:jindalparas961@gmail.com"
-            className="text-slate-400 hover:text-indigo-400 transition"
+            className="text-slate-400 hover:text-indigo-400 transition-transform duration-150 hover:scale-110"
           >
             <FaEnvelope />
           </Link>
@@ -25,7 +24,7 @@ export default function ContactSection() {
           <Link
             href="https://www.linkedin.com/in/paras-jindal-397561202/"
             target="_blank"
-            className="text-slate-400 hover:text-sky-400 transition"
+            className="text-slate-400 hover:text-sky-400 transition-transform duration-150 hover:scale-110"
           >
             <FaLinkedin />
           </Link>
@@ -34,7 +33,7 @@ export default function ContactSection() {
           <Link
             href="https://github.com/1208paras"
             target="_blank"
-            className="text-slate-400 hover:text-emerald-400 transition"
+            className="text-slate-400 hover:text-emerald-400 transition-transform duration-150 hover:scale-110"
           >
             <FaGithub />
           </Link>
