@@ -12,7 +12,7 @@ export default function ContactSection() {
         </h2>
 
         {/* EXACT GOOGLE STYLE ICON ROW */}
-        <div className="flex items-center justify-center gap-10">
+        <div className="flex items-center justify-center gap-50">
 
           {/* Email icon (circle) */}
           <Link
