@@ -1,7 +1,11 @@
+// app/api/links/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 
-// GET → sirf active links laao (is_active = TRUE)
+// FORCE dynamic
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
   try {
     const result = await query(
@@ -17,11 +21,10 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST → naya short URL banao
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { url } = body; // frontend se 'url' aa raha hai
+    const { url } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -30,7 +33,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // random short code
     const short_code = Math.random().toString(36).substring(2, 8);
 
     const result = await query(
