@@ -47,6 +47,7 @@ export default function AdminPage() {
 
   async function toggleActive(id: number, isActive: boolean) {
     setUpdatingId(id);
+    setError(null);
     try {
       const res = await fetch(`/api/admin/links/${id}`, {
         method: "PATCH",

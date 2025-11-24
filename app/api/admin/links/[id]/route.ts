@@ -1,3 +1,4 @@
+// app/api/admin/links/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/lib/db";
 
@@ -22,10 +23,17 @@ export async function PATCH(
   }
 
   try {
-    await query("UPDATE links SET is_active = $1 WHERE id = $2", [
-      body.is_active,
-      id,
-    ]);
+    const result = await query(
+      "UPDATE links SET is_active = $1 WHERE id = $2",
+      [body.is_active, id]
+    );
+
+    if (result.rowCount === 0) {
+      return NextResponse.json(
+        { error: "Link not found" },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
