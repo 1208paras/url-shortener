@@ -31,6 +31,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const result = await query("SELECT * FROM links ORDER BY created_at DESC");
+  const result = await query(
+  "SELECT * FROM links WHERE is_active = TRUE ORDER BY created_at DESC"
+);
+
   return NextResponse.json(result.rows);
 }
